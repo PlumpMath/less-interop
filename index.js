@@ -20,23 +20,6 @@ function convertLeafNode(v, variablesSoFar) {
     return convertLessValueToJs(functionCallResult);
   }
 
-  if (v.name === 'rgb' && v.args) {
-    return [
-      'rgb(' + convertLessValueToJs(v.args[0], variablesSoFar),
-      convertLessValueToJs(v.args[1], variablesSoFar),
-      convertLessValueToJs(v.args[2], variablesSoFar) + ')'
-    ].join(', ');
-  }
-
-  if (v.name === 'rgba' && v.args) {
-    return [
-      'rgba(' + convertLessValueToJs(v.args[0], variablesSoFar),
-      convertLessValueToJs(v.args[1], variablesSoFar),
-      convertLessValueToJs(v.args[2], variablesSoFar),
-      convertLessValueToJs(v.args[3], variablesSoFar) + ')'
-    ].join(', ');
-  }
-
   if (!v.value) {
     return v;
   }
