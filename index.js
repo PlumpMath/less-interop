@@ -13,7 +13,13 @@ function convertLeafNode(v, variablesSoFar) {
 
   if (v.name && v.args) {
     var evaldArgs = v.args.map(function (arg) {
-      return arg.eval();
+      var frameWithFunctionRegistry = {
+        functionRegistry: less.functions.functionRegistry
+      };
+      var evalCtx = {
+        frames: [frameWithFunctionRegistry]
+      };
+      return arg.eval(evalCtx);
     });
     var functionCallResult =
       less.functions.functionRegistry.get(v.name).apply(this, evaldArgs);
