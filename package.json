@@ -7,13 +7,15 @@
     "less": "~2.5.0"
   },
   "devDependencies": {
-    "less": "~2.5.0"
+    "istanbul": "^0.4.0",
+    "less": "~2.5.0",
+    "mocha": "^2.3.3"
   },
   "dependencies": {
     "lodash.isstring": "^3.0.1"
   },
   "scripts": {
-    "test": "istanbul cover _mocha -- -R spec"
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec"
   },
   "author": "YJ Yang <chcokr@gmail.com>",
   "license": "MIT"
