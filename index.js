@@ -129,6 +129,7 @@ function extractFromRules(rules, variablesSoFar, nodesSoFar) {
   rules.forEach(function (rule) {
     if (rule.root) {
       extractFromRules(rule.root.rules, variablesSoFar, nodesSoFar);
+      return;
     }
 
     if (rule.variable && rule.name && rule.value) {
