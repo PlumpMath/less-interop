@@ -15,7 +15,12 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
     var evalResult = v.eval({
       isMathOn: function () {
         return true;
-      }
+      },
+      frames: [{
+        variable: function (name) {
+          return nodesSoFar[name];
+        }
+      }]
     });
     return convertLessValueToJs(evalResult);
   }
