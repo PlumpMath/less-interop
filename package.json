@@ -4,7 +4,10 @@
   "description": "Import LESS variables into JS.",
   "main": "index.js",
   "peerDependencies": {
-    "less": ">=2.5.0"
+    "less": "~2.5.0"
+  },
+  "devDependencies": {
+    "less": "~2.5.0"
   },
   "dependencies": {
     "lodash.assign": "^3.2.0",
