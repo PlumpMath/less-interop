@@ -46,10 +46,6 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
     return v;
   }
 
-  if (isString(v.value) && v.value.charAt(0) === '#') {
-    return v.value;
-  }
-
   var unit = v.unit;
   if (unit &&
       unit.denominator &&
@@ -87,10 +83,6 @@ function convertLessValueToJs(v, variablesSoFar, nodesSoFar) {
 
     if (!Array.isArray(arr)) {
       return arr;
-    }
-
-    if (arr.length === 1) {
-      return arr[0];
     }
 
     var joinSeparator = ' ';
