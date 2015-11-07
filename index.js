@@ -1,4 +1,3 @@
-var assign = require('lodash.assign');
 var less = require('less');
 var isString = require('lodash.isstring');
 

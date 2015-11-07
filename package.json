@@ -10,7 +10,6 @@
     "less": "~2.5.0"
   },
   "dependencies": {
-    "lodash.assign": "^3.2.0",
     "lodash.isstring": "^3.0.1"
   },
   "scripts": {
