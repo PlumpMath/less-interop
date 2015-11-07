@@ -27,14 +27,14 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
 
   if (v.name && v.args) {
     var evaldArgs = v.args.map(function (arg) {
-      var frameWithFunctionRegistry = {
+      var frame = {
         functionRegistry: less.functions.functionRegistry,
         variable: function (name) {
           return nodesSoFar[name];
         }
       };
       var evalCtx = {
-        frames: [frameWithFunctionRegistry]
+        frames: [frame]
       };
       return arg.eval(evalCtx);
     });
