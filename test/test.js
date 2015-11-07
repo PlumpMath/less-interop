@@ -9,6 +9,8 @@ var directories = fs.readdirSync(__dirname).filter(function(file) {
 
 describe('Passes', function () {
 
+  require('./sub-root')();
+
   directories.forEach(function (dir) {
 
     //if (dir !== 'lighten') return;
