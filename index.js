@@ -128,7 +128,7 @@ function handleValArrayWithMoreThanOneElem(val, variablesSoFar, nodesSoFar) {
 function extractFromRules(rules, variablesSoFar, nodesSoFar) {
   rules.forEach(function (rule) {
     if (rule.root) {
-      extractFromRules(rule.root.rules, variablesSoFar, nodesSoFar);
+      extractFromRules(rule.rules, variablesSoFar, nodesSoFar);
       return;
     }
 
