@@ -15,8 +15,19 @@ describe('Passes', function () {
 
     var importResult = null;
 
+    var lessFilePath = path.join(__dirname, dir, 'index.less');
+
+    try {
+      fs.statSync(lessFilePath);
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        return;
+      }
+      throw err;
+    }
+
     var source = fs.readFileSync(
-      path.join(__dirname, dir, 'index.less'),
+      lessFilePath,
       {encoding: 'utf8'}
     );
 
