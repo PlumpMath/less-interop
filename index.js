@@ -3,6 +3,24 @@ var less = require('less');
 var isString = require('lodash.isstring');
 
 function convertLeafNode(v, variablesSoFar, nodesSoFar) {
+  var evalCtx = {
+    frames: [{
+      functionRegistry: less.functions.functionRegistry,
+      variable: function (name) {
+        return nodesSoFar[name];
+      }
+    }],
+    inParenthesis: function () {
+      return true;
+    },
+    outOfParenthesis: function () {
+      return true;
+    },
+    isMathOn: function () {
+      return true;
+    }
+  };
+
   if (v.name && !v.args) {
     return variablesSoFar[v.name];
   }
@@ -12,33 +30,12 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
   }
 
   if (v.__proto__.type === 'Operation') {
-    var evalResult = v.eval({
-      isMathOn: function () {
-        return true;
-      },
-      frames: [{
-        variable: function (name) {
-          return nodesSoFar[name];
-        }
-      }]
-    });
+    var evalResult = v.eval(evalCtx);
     return convertLessValueToJs(evalResult);
   }
 
   if (v.name && v.args) {
     var evaldArgs = v.args.map(function (arg) {
-      var frame = {
-        functionRegistry: less.functions.functionRegistry,
-        variable: function (name) {
-          return nodesSoFar[name];
-        }
-      };
-      var evalCtx = {
-        frames: [frame],
-        isMathOn: function () {
-          return true;
-        }
-      };
       return arg.eval(evalCtx);
     });
     var functionCallResult =
