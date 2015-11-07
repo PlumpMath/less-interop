@@ -11,6 +11,15 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
     return v.toCSS();
   }
 
+  if (v.__proto__.type === 'Operation') {
+    var evalResult = v.eval({
+      isMathOn: function () {
+        return true;
+      }
+    });
+    return convertLessValueToJs(evalResult);
+  }
+
   if (v.name && v.args) {
     var evaldArgs = v.args.map(function (arg) {
       var frameWithFunctionRegistry = {
