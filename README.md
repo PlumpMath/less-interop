@@ -46,7 +46,7 @@ less.parse(source, parseOptions, function (err, tree) {
   
   // Finally this library comes into play.
   // The function returned by `require('less-interop')` takes in one argument.
-  // This argument should be `tree.rules`.
+  // ***This argument should be `tree.rules`.***
   var importedVars = importLessVars(tree.rules);
   
   // The names of the LESS variables defined in the source code above will be
