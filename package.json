@@ -7,14 +7,17 @@
     "less": "~2.5.0"
   },
   "devDependencies": {
+    "coveralls": "^2.11.4",
     "istanbul": "^0.4.0",
     "less": "~2.5.0",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "mocha-lcov-reporter": "^1.0.0"
   },
   "dependencies": {
     "lodash.isstring": "^3.0.1"
   },
   "scripts": {
+    "coveralls": "npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec"
   },
   "author": "YJ Yang <chcokr@gmail.com>",
