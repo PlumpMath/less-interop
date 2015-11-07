@@ -2,7 +2,7 @@ var assign = require('lodash.assign');
 var less = require('less');
 var isString = require('lodash.isstring');
 
-function convertLeafNode(v, variablesSoFar) {
+function convertLeafNode(v, variablesSoFar, nodesSoFar) {
   if (v.name && !v.args) {
     return variablesSoFar[v.name];
   }
@@ -14,7 +14,10 @@ function convertLeafNode(v, variablesSoFar) {
   if (v.name && v.args) {
     var evaldArgs = v.args.map(function (arg) {
       var frameWithFunctionRegistry = {
-        functionRegistry: less.functions.functionRegistry
+        functionRegistry: less.functions.functionRegistry,
+        variable: function (name) {
+          return nodesSoFar[name];
+        }
       };
       var evalCtx = {
         frames: [frameWithFunctionRegistry]
@@ -23,7 +26,7 @@ function convertLeafNode(v, variablesSoFar) {
     });
     var functionCallResult =
       less.functions.functionRegistry.get(v.name).apply(this, evaldArgs);
-    return convertLessValueToJs(functionCallResult);
+    return convertLessValueToJs(functionCallResult, nodesSoFar);
   }
 
   if (!v.value) {
@@ -60,13 +63,14 @@ function convertLeafNode(v, variablesSoFar) {
   return v.value;
 }
 
-function convertLessValueToJs(v, variablesSoFar) {
+function convertLessValueToJs(v, variablesSoFar, nodesSoFar) {
   if (!v.value && Array.isArray(v) && v.length === 1) {
-    return convertLeafNode(v[0], variablesSoFar);
+    return convertLeafNode(v[0], variablesSoFar, nodesSoFar);
   }
 
   if (v.value !== undefined && Array.isArray(v.value)) {
-    var arr = handleValArrayWithMoreThanOneElem(v.value, variablesSoFar);
+    var arr =
+      handleValArrayWithMoreThanOneElem(v.value, variablesSoFar, nodesSoFar);
 
     if (!Array.isArray(arr)) {
       return arr;
@@ -88,21 +92,22 @@ function convertLessValueToJs(v, variablesSoFar) {
     }).join(joinSeparator);
   }
 
-  return convertLeafNode(v, variablesSoFar);
+  return convertLeafNode(v, variablesSoFar, nodesSoFar);
 }
 
-function handleValArrayWithMoreThanOneElem(val, variablesSoFar) {
+function handleValArrayWithMoreThanOneElem(val, variablesSoFar, nodesSoFar) {
   var arr = val.map(function (item) {
     var itemVal;
 
     if (item.value !== undefined) {
-      itemVal = convertLessValueToJs(item.value, variablesSoFar);
+      itemVal = convertLessValueToJs(item.value, variablesSoFar, nodesSoFar);
     } else {
-      itemVal = convertLessValueToJs(item, variablesSoFar);
+      itemVal = convertLessValueToJs(item, variablesSoFar, nodesSoFar);
     }
 
     if (Array.isArray(itemVal)) {
-      return handleValArrayWithMoreThanOneElem(itemVal, variablesSoFar);
+      return handleValArrayWithMoreThanOneElem(
+        itemVal, variablesSoFar, nodesSoFar);
     }
 
     return itemVal;
@@ -115,16 +120,18 @@ function handleValArrayWithMoreThanOneElem(val, variablesSoFar) {
   return arr;
 }
 
-function extractFromRules(rules, variablesSoFar) {
+function extractFromRules(rules, variablesSoFar, nodesSoFar) {
   rules.forEach(function (rule) {
     if (rule.importedFilename) {
-      var importedVars = extractFromRules(rule.root.rules, variablesSoFar);
+      var importedVars =
+        extractFromRules(rule.root.rules, variablesSoFar, nodesSoFar);
       variablesSoFar = assign(variablesSoFar, importedVars);
     }
 
     if (rule.variable && rule.name && rule.value) {
       variablesSoFar[rule.name] =
-        convertLessValueToJs(rule.value, variablesSoFar);
+        convertLessValueToJs(rule.value, variablesSoFar, nodesSoFar);
+      nodesSoFar[rule.name] = rule;
     }
   });
 
@@ -139,7 +146,7 @@ function lessVarNameToJsName(name) {
 }
 
 module.exports = function importLessVars(rules) {
-  var lessVars = extractFromRules(rules, {});
+  var lessVars = extractFromRules(rules, {}, {});
 
   var varsWithKeysRenamedToJsStyle = {};
   Object.keys(lessVars).forEach(function (key) {
