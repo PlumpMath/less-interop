@@ -9,7 +9,7 @@ Have you ever wanted to use variables from a LESS file directly in your JS code?
 If you're like me (believe in CSS-in-JS, and use Bootstrap v3 a lot which is
 written in LESS), there's a chance you've wanted to.
 In my opinion, any non-trivial web design benefits from reusing/overriding all
-the nicely thought-out variables defined by Bootstrap, and often it often makes
+the nicely thought-out variables defined by, say, Bootstrap, and often it makes
 sense to have this take place within JS code.
 
 This library exposes a function that walks through a LESS abstract syntax tree
