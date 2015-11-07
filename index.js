@@ -139,10 +139,8 @@ function handleValArrayWithMoreThanOneElem(val, variablesSoFar, nodesSoFar) {
 
 function extractFromRules(rules, variablesSoFar, nodesSoFar) {
   rules.forEach(function (rule) {
-    if (rule.importedFilename) {
-      var importedVars =
-        extractFromRules(rule.root.rules, variablesSoFar, nodesSoFar);
-      variablesSoFar = assign(variablesSoFar, importedVars);
+    if (rule.root) {
+      extractFromRules(rule.root.rules, variablesSoFar, nodesSoFar);
     }
 
     if (rule.variable && rule.name && rule.value) {
