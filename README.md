@@ -12,9 +12,9 @@ In my opinion, any non-trivial web design benefits from reusing/overriding all
 the nicely thought-out variables defined by, say, Bootstrap, and often it makes
 sense to have this take place within JS code.
 
-This library exposes a function that walks through a LESS abstract syntax tree
+**This library exposes a function that walks through a LESS abstract syntax tree
 and extracts all observed variables into a format that can be easily consumed in
-JS.
+JS.**
 
 Currently, all variables in Bootstrap v3.3.5's `variables.less`
 file are successfully extracted.
