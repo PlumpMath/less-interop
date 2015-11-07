@@ -13,7 +13,7 @@
     "lodash.isstring": "^3.0.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "istanbul cover _mocha -- -R spec"
   },
   "author": "YJ Yang <chcokr@gmail.com>",
   "license": "MIT"
