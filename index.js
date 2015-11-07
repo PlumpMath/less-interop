@@ -10,13 +10,13 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
         return nodesSoFar[name];
       }
     }],
+    isMathOn: function () {
+      return true;
+    },
     inParenthesis: function () {
       return true;
     },
     outOfParenthesis: function () {
-      return true;
-    },
-    isMathOn: function () {
       return true;
     }
   };
