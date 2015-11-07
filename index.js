@@ -34,7 +34,10 @@ function convertLeafNode(v, variablesSoFar, nodesSoFar) {
         }
       };
       var evalCtx = {
-        frames: [frame]
+        frames: [frame],
+        isMathOn: function () {
+          return true;
+        }
       };
       return arg.eval(evalCtx);
     });
