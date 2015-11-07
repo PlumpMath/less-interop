@@ -53,5 +53,6 @@ less.parse(source, parseOptions, function (err, tree) {
   // camel-cased and won't have the `@`, following JS convention.
   // eg) @random-color -> randomColor
   console.log(importedVars.randomColor); // will print '#123456'
+  
 });
 ```
