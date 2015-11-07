@@ -138,8 +138,6 @@ function extractFromRules(rules, variablesSoFar, nodesSoFar) {
       nodesSoFar[rule.name] = rule;
     }
   });
-
-  return variablesSoFar;
 }
 
 function lessVarNameToJsName(name) {
@@ -150,11 +148,15 @@ function lessVarNameToJsName(name) {
 }
 
 module.exports = function importLessVars(rules) {
-  var lessVars = extractFromRules(rules, {}, {});
+  var variablesSoFar = {};
+  var nodesSoFar = {};
+
+  extractFromRules(rules, variablesSoFar, nodesSoFar);
 
   var varsWithKeysRenamedToJsStyle = {};
-  Object.keys(lessVars).forEach(function (key) {
-    varsWithKeysRenamedToJsStyle[lessVarNameToJsName(key)] = lessVars[key];
+  Object.keys(variablesSoFar).forEach(function (key) {
+    varsWithKeysRenamedToJsStyle[lessVarNameToJsName(key)] =
+      variablesSoFar[key];
   });
 
   return varsWithKeysRenamedToJsStyle
