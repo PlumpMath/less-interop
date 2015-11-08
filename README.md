@@ -204,4 +204,4 @@ In this case, all the variables in the sub-root will successfully get extracted.
 
 How can you achieve this sub-root-style AST generation?
 Check out [less-loader's
-WebpackFileManager](https://github.com/webpack/less-loader/blob/master/index.js#L86).
+WebpackFileManager](https://github.com/webpack/less-loader/blob/v2.2.1/index.js#L86).
