@@ -177,3 +177,31 @@ LESS | JS
 10px 20px | '10px 20px'
 0 1px 0 #fff | '0 1px 0 #fff'
 0 1px 2px rgba(0, 0, 0, .6) | '0 1px 2px rgba(0, 0, 0, 0.6)'
+
+## A note about `@import`
+
+This library tries to not care about imported LESS files.
+The approach it chooses instead is this: if a file is imported, it is expected
+that all of that file's rules are included in your abstract syntax tree as a
+sub-root.
+For example:
+
+```
+var importLessVars = require('less-interop');
+
+importLessVars([
+  {blah blah blah rule number one},
+  {
+    root: true,
+    rules: [
+      {blah blah blah rule from imported file}
+    ]
+  }
+]);
+```
+
+In this case, all the variables in the sub-root will successfully get extracted.
+
+How can you achieve this sub-root style AST generation?
+Check out how [less-loader's
+WebpackFileManager](https://github.com/webpack/less-loader/blob/master/index.js#L86).
