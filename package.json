@@ -1,6 +1,6 @@
 {
   "name": "less-interop",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Import LESS variables into JS.",
   "main": "index.js",
   "peerDependencies": {
