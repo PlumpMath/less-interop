@@ -93,12 +93,13 @@ LESS | JS
 ---- | ----
 "hello world" | '"hello world"'
 
-*Note:* strings that contain a whitespace but are not quoted will not be quoted.
-I'm not even sure if this is even valid LESS syntax in most cases.
+*Note:* strings that contain a whitespace but are not quoted will result in the
+words being joined with a comma.
+See the section "Multiple values being juxtaposed" below for an explanation.
 
 LESS | JS
 ---- | ----
-hello world | 'hello world'
+hello world | 'hello, world'
 
 ### Pixels will result in plain numbers
 
