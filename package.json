@@ -21,5 +21,21 @@
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec"
   },
   "author": "YJ Yang <chcokr@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chcokr/less-interop.git"
+  },
+  "keywords": [
+    "less",
+    "interop",
+    "css-in-js"
+  ],
+  "bugs": {
+    "url": "https://github.com/chcokr/less-interop/issues"
+  },
+  "homepage": "https://github.com/chcokr/less-interop#readme"
 }
