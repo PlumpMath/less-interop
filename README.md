@@ -56,3 +56,123 @@ less.parse(source, parseOptions, function (err, tree) {
   
 });
 ```
+
+## Conversion rules/examples
+
+Check out the following examples to see how LESS values will get converted in
+JS.
+Keep in mind that the primary goal here is to be able to use LESS variables
+directly in CSS-in-JS scenarios as smoothly as possible.
+
+### Colors will result in strings
+
+LESS | JS
+---- | ----
+#000 | '#000'
+#123456 | '#123456'
+rgb(100, 100, 100) | '#646464'
+rgba(100, 100, 100, 0.15) | 'rgba(100, 100, 100, 0.15)'
+rgba(100, 100, 100, .15) | 'rgba(100, 100, 100, 0.15)'
+
+### Numbers will result in numbers (duh)
+
+LESS | JS
+---- | ----
+1.5 | 1.5
+
+### Strings will result in strings (duh)
+
+LESS | JS
+---- | ----
+"hello" | 'hello'
+'hello' | 'hello'
+
+### Quoted strings containing a whitespace will be quoted
+
+LESS | JS
+---- | ----
+"hello world" | '"hello world"'
+
+*Note:* strings that contain a whitespace but are not quoted will not be quoted.
+I'm not even sure if this is even valid LESS syntax in most cases.
+
+LESS | JS
+---- | ----
+hello world | 'hello world'
+
+### Pixels will result in plain numbers
+
+This is in accordance with React.js convention.
+
+LESS | JS
+---- | ----
+18px | 18
+
+### Percents will result in strings
+
+LESS | JS
+---- | ----
+15% | '15%'
+
+### Function calls will be statically evaluated.
+
+LESS | JS
+---- | ----
+ceil(18.5) | 19
+ceil(floor(18.5)) | 18
+darken(#428bca, 6.5%) | '#337ab7'
+darken(rgb(66, 139, 202), 6.5%) | '#337ab7'
+
+### Math will be statically evaluated
+
+LESS | JS
+---- | ----
+3 + 4 | 7
+19px + 1 | 20
+ceil(3.5px + 1) | 5
+
+Remember that pixels will result in plain JS numbers.
+
+### Variable references will be resolved
+
+Variables that have been defined will be resolved to its value.
+
+Throughout the following table, assume that `@x: 18.5` has already been defined.
+
+LESS | JS
+---- | ----
+@x | 18.5
+@x + 1 | 19.5
+ceil(@x) | 19
+ceil(@x + 1) | 20
+
+### Everything not mentioned so far will be converted into strings
+
+Probably/hopefully.
+If you run into a buggy situation please submit an issue or a pull request!
+
+LESS | JS
+---- | ----
+bold | 'bold'
+block | 'block'
+inherit | 'inherit'
+underline | 'underline'
+
+### Multiple values being juxtaposed
+
+So this one is a bit complicated.
+
+If all values in the list are strings, they will be joined with a comma.
+
+LESS | JS
+---- | ----
+"Helvetica Neue", Helvetica, Arial, sans-serif | '"Helvetica Neue", Helvetica, Arial, sans-serif'
+
+Otherwise, they will be joined with a whitespace.
+
+LESS | JS
+---- | ----
+0 10px 20px 15px | '0 10px 20px 15px'
+10px 20px | '10px 20px'
+0 1px 0 #fff | '0 1px 0 #fff'
+0 1px 2px rgba(0, 0, 0, .6) | '0 1px 2px rgba(0, 0, 0, 0.6)'
