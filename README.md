@@ -203,5 +203,5 @@ importLessVars([
 In this case, all the variables in the sub-root will successfully get extracted.
 
 How can you achieve this sub-root-style AST generation?
-Check out how [less-loader's
+Check out [less-loader's
 WebpackFileManager](https://github.com/webpack/less-loader/blob/master/index.js#L86).
