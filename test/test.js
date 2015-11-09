@@ -13,12 +13,14 @@ describe('Passes', function () {
 
   directories.forEach(function (dir) {
 
+    // Uncomment the following line to make just that one test run.
     //if (dir !== 'lighten') return;
 
     var importResult = null;
 
     var lessFilePath = path.join(__dirname, dir, 'index.less');
 
+    // Skip empty subdirectories.
     try {
       fs.statSync(lessFilePath);
     } catch (err) {
