@@ -127,11 +127,6 @@ function handleValArrayWithMoreThanOneElem(val, variablesSoFar, nodesSoFar) {
 
 function extractFromRules(rules, variablesSoFar, nodesSoFar) {
   rules.forEach(function (rule) {
-    if (rule.root) {
-      extractFromRules(rule.rules, variablesSoFar, nodesSoFar);
-      return;
-    }
-
     if (rule.variable && rule.name && rule.value) {
       variablesSoFar[rule.name] =
         convertLessValueToJs(rule.value, variablesSoFar, nodesSoFar);

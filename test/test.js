@@ -9,8 +9,6 @@ var directories = fs.readdirSync(__dirname).filter(function(file) {
 
 describe('Passes', function () {
 
-  require('./sub-root')();
-
   directories.forEach(function (dir) {
 
     // Uncomment the following line to make just that one test run.
